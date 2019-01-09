@@ -1,6 +1,6 @@
 ---
-image_url: http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip
-image_sha256: f143cb29140209a7a9fccc5395c9e2d924a0ca82976a4ec9b31b7d1478856531
+image_url: http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2018-11-15/2018-11-13-raspbian-stretch-lite.zip
+image_sha256: 47ef1b2501d0e5002675a50b6868074e693f78829822eef64f3878487953234d
 mounts:
   # offsets are calculated from running fdisk -l ${file.img} and seeing where the sector begins * 512
 - offset: 4194304
