@@ -27,11 +27,11 @@ mounts:
   - "ln -s /etc/systemd/system/london-bridge-client.service /mnt/etc/systemd/system/multi-user.target.wants/london-bridge-client.service"
   - "cp /run/files/frpc /mnt/usr/local/bin/frpc"
   - "mkdir -p /mnt/home/pi/.ssh"
-  - "cp /run/files/authorized_keys /mnt/home/pi/.ssh/authorized_keys"
-  - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-brooklyn.ini"
-  - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-london.ini"
-  - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-brooklyn.ini"
-  - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-london.ini"
+  # - "cp /run/files/authorized_keys /mnt/home/pi/.ssh/authorized_keys"
+  # - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-brooklyn.ini"
+  # - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-london.ini"
+  # - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-brooklyn.ini"
+  # - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-london.ini"
   # # set defaults for wpa supplicant; networks will be appended to this file
   # - "cp /run/files/etc/wpa_supplicant/wpa_supplicant.conf /mnt/etc/wpa_supplicant/wpa_supplicant.conf"
   # networks:
