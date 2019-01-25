@@ -1,15 +1,16 @@
 ---
-image_url: http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip
-image_sha256: f143cb29140209a7a9fccc5395c9e2d924a0ca82976a4ec9b31b7d1478856531
+image_url: https://downloads.raspberrypi.org/raspbian_lite_latest
+image_sha256: a121652937ccde1c2583fe77d1caec407f2cd248327df2901e4716649ac9bc97
+# Device                                Boot Start     End Sectors  Size Id Type
+# 2018-11-13-raspbian-stretch-lite.img1       8192   98045   89854 43.9M  c W95 FAT32 (LBA)
+# 2018-11-13-raspbian-stretch-lite.img2      98304 3645439 3547136  1.7G 83 Linux
 mounts:
   # offsets are calculated from running fdisk -l ${file.img} and seeing where the sector begins * 512
 - offset: 4194304
   sh:
-  # set hdmi to safe mode for my tiny screen
-  - "cp /run/files/boot/config.txt /mnt/config.txt"
   # if the file /boot/ssh exists upon startup, then sshd_server will be started
   - "touch /mnt/ssh"
-- offset: 48234496
+- offset: 50331648
   sh:
   # set US keyboard
   - "cp /run/files/etc/default/keyboard /mnt/etc/default/keyboard"
@@ -17,10 +18,24 @@ mounts:
   - "cp /run/files/etc/ssh/ca.pub /mnt/etc/ssh/ca.pub"
   # configure sshd to allow keys signed by my CA and dissallow passwords
   - "cp /run/files/etc/ssh/sshd_config /mnt/etc/ssh/sshd_config"
-  # set defaults for wpa supplicant; networks will be appended to this file
-  - "cp /run/files/etc/wpa_supplicant/wpa_supplicant.conf /mnt/etc/wpa_supplicant/wpa_supplicant.conf"
-  networks:
-  - ssid: "0"
-    passphrase: redacted
-  - ssid: "test"
-    passphrase: nope nope nope nope
+  # set up frpc
+  - "cp /run/files/etc/frpc-brooklyn.ini /mnt/etc/frpc-brooklyn.ini"
+  - "cp /run/files/etc/frpc-london.ini /mnt/etc/frpc-london.ini"
+  - "cp /run/files/etc/systemd/system/brooklyn-bridge-client.service /mnt/etc/systemd/system/brooklyn-bridge-client.service"
+  - "cp /run/files/etc/systemd/system/london-bridge-client.service /mnt/etc/systemd/system/london-bridge-client.service"
+  - "ln -s /etc/systemd/system/brooklyn-bridge-client.service /mnt/etc/systemd/system/multi-user.target.wants/brooklyn-bridge-client.service"
+  - "ln -s /etc/systemd/system/london-bridge-client.service /mnt/etc/systemd/system/multi-user.target.wants/london-bridge-client.service"
+  - "cp /run/files/frpc /mnt/usr/local/bin/frpc"
+  - "mkdir -p /mnt/home/pi/.ssh"
+  - "cp /run/files/authorized_keys /mnt/home/pi/.ssh/authorized_keys"
+  - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-brooklyn.ini"
+  - "sed -i 's/\\$site-name/testsite/' /mnt/etc/frpc-london.ini"
+  - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-brooklyn.ini"
+  - "sed -i 's/\\$site-port/9141/' /mnt/etc/frpc-london.ini"
+  # # set defaults for wpa supplicant; networks will be appended to this file
+  # - "cp /run/files/etc/wpa_supplicant/wpa_supplicant.conf /mnt/etc/wpa_supplicant/wpa_supplicant.conf"
+  # networks:
+  # - ssid: "0"
+  #   passphrase: redacted
+  # - ssid: "test"
+  #   passphrase: nope nope nope nope

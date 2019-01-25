@@ -1,0 +1,13 @@
+[Unit]
+Description=frpc is a client to the bridge proxy servers which exposes the local ssh port (22) via a port on the bridge servers
+
+[Service]
+TimeoutStartSec=0
+RestartSec=60
+Restart=always
+User=nobody
+Group=nogroup
+ExecStart=/usr/local/bin/frpc -c /etc/frpc-london.ini
+
+[Install]
+WantedBy=multi-user.target

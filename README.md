@@ -10,10 +10,11 @@ After running `go main.go` in the root of this project, the file `image.img` wil
 * any client ssh key signed with the CA private key can ssh as root to the pi
 * keyboard set to US
 * WPA set to US
-* HDMI set to safe mode for my small 3.5-inch display
 
 ## todo
 
 [ ] download image and verify sha256
 
 [ ] vendor golang dependencies
+
+[ ] save base image with frpc and init files already loaded, and secondary script to overwrite specific config
